@@ -1,0 +1,25 @@
+{
+  "name": "flappy-bird-game",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mikhmol/flappy-bird-game.git"
+  },
+  "keywords": [],
+  "author": "Mikhailo Moliakov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mikhmol/flappy-bird-game/issues"
+  },
+  "homepage": "https://github.com/mikhmol/flappy-bird-game/wiki",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "eslint": "^8.20.0"
+  }
+}
