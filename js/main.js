@@ -7,7 +7,7 @@ const subtitle = document.querySelector('[data-subtitle]');
 
 let lastTime;
 let bird;
-const world = new World();
+const world = new World(800, 0.75);
 
 function updateLoop(time) {
   if (lastTime === null) {
