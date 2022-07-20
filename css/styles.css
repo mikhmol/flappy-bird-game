@@ -38,7 +38,7 @@ body {
   --bird-size: 60px;
   position: absolute;
   /* background-color: hsl(50, 75%, 50%); */
-  content: url('flappyBird.png');
+  content: url('./flappyBird.png');
   width: var(--bird-size);
   height: var(--bird-size);
   left: var(--bird-size);
