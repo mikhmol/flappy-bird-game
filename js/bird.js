@@ -1,7 +1,7 @@
 const BIRD_SPEED = 0.5;
 const JUMP_DURATION = 125;
 
-export default class FlappyBird {
+export default class Bird {
 
   constructor(element) {
     this.birdElem = document.querySelector(element);

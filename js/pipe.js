@@ -1,7 +1,8 @@
 const PIPE_WIDTH = 120;
-const HOLE_HEIGHT = 300;
+const HOLE_HEIGHT = 250;
+const PADDING = 1.25;
 
-export default class FlappyPipe {
+export default class Pipe {
 
   constructor() {
     document.documentElement.style.setProperty('--pipe-width', PIPE_WIDTH);
@@ -15,8 +16,8 @@ export default class FlappyPipe {
     this.pipeElem.style.setProperty(
       '--hole-top',
       randomNumberBetween(
-        HOLE_HEIGHT * 1.5,
-        window.innerHeight - HOLE_HEIGHT * 0.5
+        HOLE_HEIGHT * PADDING,
+        window.innerHeight - HOLE_HEIGHT * PADDING
       )
     );
     this.left = window.innerWidth;
