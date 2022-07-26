@@ -5,22 +5,15 @@ document.addEventListener('keypress', handleStart, { once: true });
 const title = document.querySelector('[data-title]');
 const subtitle = document.querySelector('[data-subtitle]');
 
-let lastTime;
 let bird;
 const world = new World(800, 0.75);
+const WINDOW_UPDATE_INTERVAL = 20;
+let intervalId;
 
-function updateLoop(time) {
-  if (lastTime === null) {
-    lastTime = time;
-    window.requestAnimationFrame(updateLoop);
-    return;
-  }
-  const delta = time - lastTime;
-  world.update(delta);
-  bird.move(delta);
+function updateLoop() {
+  world.update(WINDOW_UPDATE_INTERVAL);
+  bird.move(WINDOW_UPDATE_INTERVAL);
   if (checkLose()) return handleLose();
-  lastTime = time;
-  window.requestAnimationFrame(updateLoop);
 }
 
 function checkLose() {
@@ -43,15 +36,13 @@ function isCollision(rect1, rect2) {
 
 function handleStart() {
   title.classList.add('hide');
-
   bird = new Bird('[data-bird]');
   world.reset();
-
-  lastTime = null;
-  window.requestAnimationFrame(updateLoop);
+  intervalId = setInterval(updateLoop, WINDOW_UPDATE_INTERVAL);
 }
 
 function handleLose() {
+  clearInterval(intervalId);
   setTimeout(() => {
     title.classList.remove('hide');
     subtitle.classList.remove('hide');
