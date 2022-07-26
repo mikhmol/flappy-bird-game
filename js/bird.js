@@ -22,7 +22,6 @@ export default class Bird {
 
   get rectangle() {
     const rect = this.birdElem.getBoundingClientRect();
-    console.log(rect);
     return rect;
   }
 
