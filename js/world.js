@@ -17,15 +17,17 @@ export default class World {
     this.timeSinceLastPipe += delta;
     if (this.timeSinceLastPipe > this.pipeInterval) {
       this.timeSinceLastPipe -= this.pipeInterval;
-      const pipe = new Pipe();
-      this.pipes.push(pipe);
+      this.pipes.push(new Pipe());
     }
-    this.pipes.forEach(pipe => {
-      if (pipe.outside) {
+    this.pipes.forEach((pipe, index) => {
+      if (!pipe.outside) {
+        pipe.left -= delta * this.pipeSpeed;
+      } else {
+        pipe.left -= delta * this.pipeSpeed;
         this.passedPipeCount++;
-        return pipe.remove();
+        this.pipes.splice(index, 1);
+        pipe.remove();
       }
-      pipe.left -= delta * this.pipeSpeed;
     });
     this.bird.move(delta);
   }
@@ -35,6 +37,7 @@ export default class World {
     this.timeSinceLastPipe = this.pipeInterval;
     this.passedPipeCount = 0;
     this.bird = new Bird('[data-bird]');
+    this.pipes.length = 0;
   }
 
   checkLose() {
