@@ -9,6 +9,8 @@ export default class World {
     this.pipes = [];
   }
 
+  // [[DOMRect, DOMRect], [DOMRect, DOMRect]]
+  // -> [DOMRect, DOMRect, DOMRect, DOMRect]
   get pipeRectangles() {
     return this.pipes.flatMap(pipe => pipe.rects);
   }
@@ -25,7 +27,9 @@ export default class World {
       pipe.remove();
       this.pipes.shift();
     }
-    movePipes(this.pipes, delta * this.pipeSpeed);
+    this.pipes.forEach(pipe => {
+      pipe.left -= delta * this.pipeSpeed;
+    });
     this.bird.move(delta);
   }
 
@@ -52,12 +56,6 @@ export default class World {
     return outsideWorld || insidePipe;
   }
 
-}
-
-function movePipes(pipes, left) {
-  pipes.forEach(pipe => {
-    pipe.left -= left;
-  });
 }
 
 function isCollision(rect1, rect2) {
