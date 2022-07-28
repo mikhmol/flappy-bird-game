@@ -2,7 +2,7 @@ import World from './world.js';
 
 const title = document.querySelector('[data-title]');
 const subtitle = document.querySelector('[data-subtitle]');
-const WINDOW_UPDATE_INTERVAL = 20;
+const WINDOW_UPDATE_INTERVAL = 20; // in ms
 const world = new World(800, 0.75);
 let intervalId;
 
@@ -18,6 +18,11 @@ function handleStart() {
 }
 
 function handleLose() {
+  console.dir({
+    birdRect: world.bird.rectangle,
+    pipeRects: world.pipeRectangles
+  });
+
   clearInterval(intervalId);
   setTimeout(() => {
     title.classList.remove('hide');
@@ -25,6 +30,7 @@ function handleLose() {
     subtitle.textContent = `${world.passedPipeCount} Pipes`;
     document.addEventListener('keypress', handleStart, { once: true });
   }, 300);
+
 }
 
 document.addEventListener('keypress', handleStart, { once: true });

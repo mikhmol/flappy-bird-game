@@ -16,34 +16,31 @@ export default class World {
   update(delta) {
     this.timeSinceLastPipe += delta;
     if (this.timeSinceLastPipe > this.pipeInterval) {
-      this.timeSinceLastPipe -= this.pipeInterval;
+      this.timeSinceLastPipe = 0;
       this.pipes.push(new Pipe());
     }
-    this.pipes.forEach((pipe, index) => {
-      if (!pipe.outside) {
-        pipe.left -= delta * this.pipeSpeed;
-      } else {
-        pipe.left -= delta * this.pipeSpeed;
-        this.passedPipeCount++;
-        this.pipes.splice(index, 1);
-        pipe.remove();
-      }
-    });
+    this.passedPipeCount += handlePassedPipes(this.pipes);
+    movePipes(this.pipes, delta * this.pipeSpeed);
     this.bird.move(delta);
   }
 
   reset() {
     this.pipes.forEach(pipe => pipe.remove());
+    this.pipes = [];
     this.timeSinceLastPipe = this.pipeInterval;
     this.passedPipeCount = 0;
-    this.bird = new Bird('[data-bird]');
-    this.pipes.length = 0;
+    this.bird = new Bird();
   }
 
   checkLose() {
+    // debug
+    // console.dir({
+    //   birdRect: this.bird.rectangle,
+    //   insidePipe: this.pipeRectangles
+    // });
     const birdRect = this.bird.rectangle;
     const insidePipe = this.pipeRectangles.some(
-      rect => isCollision(birdRect, rect)
+      pipeSegmentRect => isCollision(birdRect, pipeSegmentRect)
     );
     const outsideWorld = birdRect.top < 0 ||
                          birdRect.bottom > window.innerHeight;
@@ -51,6 +48,25 @@ export default class World {
   }
 
 }
+
+function movePipes(pipes, left) {
+  pipes.forEach(pipe => {
+    pipe.left -= left;
+  });
+}
+
+function handlePassedPipes(pipes) {
+  let passedPipeCount = 0;
+  pipes.forEach(pipe => {
+    if (pipe.outside) {
+      passedPipeCount++;
+      pipe.remove();
+      pipes.shift();
+    }
+  });
+  return passedPipeCount;
+}
+
 
 function isCollision(rect1, rect2) {
   return (
