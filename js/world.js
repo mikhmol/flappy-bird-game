@@ -19,7 +19,12 @@ export default class World {
       this.timeSinceLastPipe = 0;
       this.pipes.push(new Pipe());
     }
-    this.passedPipeCount += handlePassedPipes(this.pipes);
+    const pipe = this.pipes[0];
+    if (pipe.outside) {
+      this.passedPipeCount++;
+      pipe.remove();
+      this.pipes.shift();
+    }
     movePipes(this.pipes, delta * this.pipeSpeed);
     this.bird.move(delta);
   }
@@ -54,19 +59,6 @@ function movePipes(pipes, left) {
     pipe.left -= left;
   });
 }
-
-function handlePassedPipes(pipes) {
-  let passedPipeCount = 0;
-  pipes.forEach(pipe => {
-    if (pipe.outside) {
-      passedPipeCount++;
-      pipe.remove();
-      pipes.shift();
-    }
-  });
-  return passedPipeCount;
-}
-
 
 function isCollision(rect1, rect2) {
   return (
