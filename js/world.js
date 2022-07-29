@@ -48,12 +48,16 @@ export default class World {
     //   insidePipe: this.pipeRectangles
     // });
     const birdRect = this.bird.rectangle;
-    const insidePipe = this.pipeRectangles.some(
-      pipeSegmentRect => isCollision(birdRect, pipeSegmentRect)
-    );
     const outsideWorld = birdRect.top < 0 ||
                          birdRect.bottom > window.innerHeight;
-    return outsideWorld || insidePipe;
+    return outsideWorld || this._insidePipe(birdRect);
+  }
+
+  _insidePipe(birdRect) {
+    return this.pipeRectangles.some(
+      pipeSegmentRect => isCollision(birdRect, pipeSegmentRect)
+    );
+
   }
 
 }
